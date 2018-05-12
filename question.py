@@ -1,5 +1,6 @@
 from __future__ import print_function
-import urllib, json
+from random import shuffle
+import urllib, json, copy
 
 class Question:
 
@@ -19,8 +20,39 @@ class Question:
     def display_question(self):
         """Prints Question"""
         print(self.question)
-        print(self.correct_answer)
-        print(self.incorrect_answers)
+
+        # oldList orders responses first with correct answer, then incorrect answers
+        old_list = copy.copy(self.incorrect_answers)
+        old_list.extend([self.correct_answer])
+        print('OLD LIST:')
+        print(old_list)
+
+        new_list = copy.copy(old_list)
+        shuffle(new_list)
+        print('NEW LIST:')
+        print(new_list)
+
+        #Forloop new_list display
+        for x in range(len(new_list)):
+            if x == 0:
+                print('A '+ new_list[x])
+            if x == 1:
+                print('B '+ new_list[x])
+            if x == 2:
+                print('C '+ new_list[x])
+            if x == 3:
+                print('D '+ new_list[x])
+
+        #Gather user input, A, B, C, D integer values
+        input = raw_input("What is your answer? ")
+        num = int(input)
+
+        if old_list[3] == new_list[num]:
+            print('Winner winner, chicken dinner!')
+        else:
+            print('GTFO!')
+
+
 
 def populate_question_database(num_questions):
     """
